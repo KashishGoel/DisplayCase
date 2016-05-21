@@ -28,7 +28,8 @@ class ViewController: UIViewController {
     func loginButtonClicked() {
         let login:FBSDKLoginManager = FBSDKLoginManager.init()
        
-        login.logInWithReadPermissions(["public_profile"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
+       
+        login.logInWithReadPermissions(["email"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
             if (error != nil) {
             print(error.localizedDescription)}
             else {
@@ -36,6 +37,7 @@ class ViewController: UIViewController {
                 FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
                     //
                 })
+                //print(FBSDKProfile.currentProfile().firstName)
             }
         }
     }
