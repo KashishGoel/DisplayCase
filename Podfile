@@ -6,5 +6,6 @@
 target 'DisplayCase' do
 
 pod 'Firebase'
+pod 'Firebase/Auth'
 end
 

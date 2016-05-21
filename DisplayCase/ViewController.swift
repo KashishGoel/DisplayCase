@@ -9,12 +9,15 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import Firebase
+
 
 
 class ViewController: UIViewController {
     @IBOutlet var fbButton: MaterialButton!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         fbButton.setTitle("FB Login", forState: UIControlState.Normal)
         fbButton.addTarget(self, action: #selector(ViewController.loginButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
@@ -26,8 +29,14 @@ class ViewController: UIViewController {
         let login:FBSDKLoginManager = FBSDKLoginManager.init()
        
         login.logInWithReadPermissions(["public_profile"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
-            if (error != nil) {}
-            else {}
+            if (error != nil) {
+            print(error.localizedDescription)}
+            else {
+            let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+                FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
+                    //
+                })
+            }
         }
     }
 
