@@ -171,6 +171,9 @@
                             <constraint firstItem="q9V-vz-6Y5" firstAttribute="trailing" secondItem="Mlt-ez-Vh5" secondAttribute="trailing" id="xCe-4O-HEM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="fbButton" destination="US0-l9-HVx" id="6AW-2u-ghh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
