@@ -24,6 +24,7 @@
 		36F4CB701CF0AD3600046C56 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F4CB6D1CF0AD3600046C56 /* FBSDKLoginKit.framework */; };
 		36F4CB711CF0AD3600046C56 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F4CB6E1CF0AD3600046C56 /* FBSDKShareKit.framework */; };
 		36F4CB731CF0D66200046C56 /* MaterialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4CB721CF0D66200046C56 /* MaterialButton.swift */; };
+		36F4CB751CF0DB1900046C56 /* MaterialTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4CB741CF0DB1900046C56 /* MaterialTextField.swift */; };
 		D9EB07298A21BE0755DCA0FE /* libPods-DisplayCase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7FD3406185B6E2B63AD339 /* libPods-DisplayCase.a */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		36F4CB6D1CF0AD3600046C56 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		36F4CB6E1CF0AD3600046C56 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		36F4CB721CF0D66200046C56 /* MaterialButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialButton.swift; sourceTree = "<group>"; };
+		36F4CB741CF0DB1900046C56 /* MaterialTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialTextField.swift; sourceTree = "<group>"; };
 		65FDBE6E84AFB67403579C0A /* Pods-DisplayCase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisplayCase.release.xcconfig"; path = "Pods/Target Support Files/Pods-DisplayCase/Pods-DisplayCase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 				36F4CB671CEFF11E00046C56 /* MaterialView.swift */,
 				3677036A1CEFE275004F4726 /* ViewController.swift */,
 				36F4CB721CF0D66200046C56 /* MaterialButton.swift */,
+				36F4CB741CF0DB1900046C56 /* MaterialTextField.swift */,
 				36F4CB6B1CEFF1B000046C56 /* Helpers */,
 				3677036C1CEFE275004F4726 /* Main.storyboard */,
 				367703721CEFE275004F4726 /* Assets.xcassets */,
@@ -276,6 +279,7 @@
 				3677036B1CEFE275004F4726 /* ViewController.swift in Sources */,
 				367703691CEFE275004F4726 /* AppDelegate.swift in Sources */,
 				36F4CB681CEFF11E00046C56 /* MaterialView.swift in Sources */,
+				36F4CB751CF0DB1900046C56 /* MaterialTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
