@@ -15,6 +15,8 @@ import Firebase
 
 class ViewController: UIViewController {
     @IBOutlet var fbButton: MaterialButton!
+    @IBOutlet var emailTextField: MaterialTextField!
+    @IBOutlet var passTextField: MaterialTextField!
 
     override func viewDidLoad() {
         
@@ -28,25 +30,56 @@ class ViewController: UIViewController {
     func loginButtonClicked() {
         let login:FBSDKLoginManager = FBSDKLoginManager.init()
        
-       
-        login.logInWithReadPermissions(["email"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
-            if (error != nil) {
-            print(error.localizedDescription)}
-            else {
-            let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-                FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
-                    //
-                })
-                //print(FBSDKProfile.currentProfile().firstName)
-            }
+        if (FBSDKAccessToken.currentAccessToken() != nil){
+            self.performSegueWithIdentifier("showLoggedIn", sender: self)
+        
         }
+        
+        else {
+            login.logInWithReadPermissions(["email"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
+                if (error != nil) {
+                      print("we here")
+                    print(error.localizedDescription)}
+                else {
+                    print("we here2")
+                    //print(FBSDKProfile.currentProfile().firstName)
+                   // self.performSegueWithIdentifier("showLoggedIn", sender: nil)
+                }
+            }
+           
+        
+        }
+       
+        
+        
+//        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+//        FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
+//            //
+//        })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        if (FBSDKAccessToken.currentAccessToken() != nil){
+            self.performSegueWithIdentifier("showLoggedIn", sender: self)
+            
+        }
+    }
 
+    @IBAction func emailButtonPressed(sender: AnyObject) {
+        FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passTextField.text!, completion: { (user, error) in
+            if error != nil {FIRAuth.auth()?.createUserWithEmail(self.emailTextField.text!, password: self.passTextField.text!, completion: { (user, error) in
+                //
+            })}
+        })
+        
+        self.performSegueWithIdentifier("showLoggedIn", sender: self)
+        
+    }
 
 }
 

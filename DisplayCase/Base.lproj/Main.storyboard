@@ -114,7 +114,7 @@
                                         <fontDescription key="fontDescription" name="NotoSans" family="Noto Sans" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="04h-pj-5Ku" customClass="MaterialTextField" customModule="DisplayCase" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="04h-pj-5Ku" customClass="MaterialTextField" customModule="DisplayCase" customModuleProvider="target">
                                         <rect key="frame" x="20" y="99" width="520" height="30"/>
                                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -134,6 +134,9 @@
                                         <state key="normal" title="Login/Signup">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="emailButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IXF-gE-eVz"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -172,12 +175,33 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="dWV-9k-eYV" id="FSy-FE-b2h"/>
                         <outlet property="fbButton" destination="US0-l9-HVx" id="6AW-2u-ghh"/>
+                        <outlet property="passTextField" destination="04h-pj-5Ku" id="2C4-qe-ZXe"/>
+                        <segue destination="oc6-qW-RPC" kind="show" identifier="showLoggedIn" id="bFN-tN-ELb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="340" y="348"/>
+            <point key="canvasLocation" x="302" y="348"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="SUL-n4-6Qq">
+            <objects>
+                <viewController id="oc6-qW-RPC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rRc-bQ-DeI"/>
+                        <viewControllerLayoutGuide type="bottom" id="4uX-G6-hDL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="m8i-aE-jip">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.72156862749999995" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qlh-NK-DiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="990" y="348"/>
         </scene>
     </scenes>
     <resources>
