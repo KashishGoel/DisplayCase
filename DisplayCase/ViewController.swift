@@ -31,6 +31,7 @@ class ViewController: UIViewController {
         let login:FBSDKLoginManager = FBSDKLoginManager.init()
        
         if (FBSDKAccessToken.currentAccessToken() != nil){
+            
             self.performSegueWithIdentifier("showLoggedIn", sender: self)
         
         }
@@ -38,12 +39,17 @@ class ViewController: UIViewController {
         else {
             login.logInWithReadPermissions(["email"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
                 if (error != nil) {
-                      print("we here")
+                      
                     print(error.localizedDescription)}
                 else {
-                    print("we here2")
-                    //print(FBSDKProfile.currentProfile().firstName)
-                   // self.performSegueWithIdentifier("showLoggedIn", sender: nil)
+                    
+                    let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
+                    FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
+                        NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
+                        print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
+                       
+                        
+                    })
                 }
             }
            
@@ -52,10 +58,8 @@ class ViewController: UIViewController {
        
         
         
-//        let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-//        FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
-//            //
-//        })
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

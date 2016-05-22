@@ -10,4 +10,4 @@ import Foundation
 import UIKit
 
 let shadowColor:CGFloat = 157.0/255.0
-
+let uuidKey = ""

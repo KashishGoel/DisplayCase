@@ -18,8 +18,9 @@
 		367703851CEFED1D004F4726 /* NotoSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 367703811CEFED1D004F4726 /* NotoSans-BoldItalic.ttf */; };
 		367703861CEFED1D004F4726 /* NotoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 367703821CEFED1D004F4726 /* NotoSans-Italic.ttf */; };
 		367703871CEFED1D004F4726 /* NotoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 367703831CEFED1D004F4726 /* NotoSans-Regular.ttf */; };
+		36D516351CF237C0000F8BB1 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D516341CF237C0000F8BB1 /* DataService.swift */; };
 		36F4CB681CEFF11E00046C56 /* MaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4CB671CEFF11E00046C56 /* MaterialView.swift */; };
-		36F4CB6A1CEFF1A300046C56 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4CB691CEFF1A300046C56 /* Colours.swift */; };
+		36F4CB6A1CEFF1A300046C56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F4CB691CEFF1A300046C56 /* Constants.swift */; };
 		36F4CB6F1CF0AD3600046C56 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F4CB6C1CF0AD3600046C56 /* FBSDKCoreKit.framework */; };
 		36F4CB701CF0AD3600046C56 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F4CB6D1CF0AD3600046C56 /* FBSDKLoginKit.framework */; };
 		36F4CB711CF0AD3600046C56 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36F4CB6E1CF0AD3600046C56 /* FBSDKShareKit.framework */; };
@@ -44,8 +45,9 @@
 		367703811CEFED1D004F4726 /* NotoSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-BoldItalic.ttf"; sourceTree = "<group>"; };
 		367703821CEFED1D004F4726 /* NotoSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Italic.ttf"; sourceTree = "<group>"; };
 		367703831CEFED1D004F4726 /* NotoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Regular.ttf"; sourceTree = "<group>"; };
+		36D516341CF237C0000F8BB1 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		36F4CB671CEFF11E00046C56 /* MaterialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialView.swift; sourceTree = "<group>"; };
-		36F4CB691CEFF1A300046C56 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		36F4CB691CEFF1A300046C56 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		36F4CB6C1CF0AD3600046C56 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		36F4CB6D1CF0AD3600046C56 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		36F4CB6E1CF0AD3600046C56 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				367703681CEFE275004F4726 /* AppDelegate.swift */,
 				36F4CB671CEFF11E00046C56 /* MaterialView.swift */,
 				3677036A1CEFE275004F4726 /* ViewController.swift */,
+				36D516341CF237C0000F8BB1 /* DataService.swift */,
 				36F4CB721CF0D66200046C56 /* MaterialButton.swift */,
 				36F4CB741CF0DB1900046C56 /* MaterialTextField.swift */,
 				36F4CB6B1CEFF1B000046C56 /* Helpers */,
@@ -132,7 +135,7 @@
 		36F4CB6B1CEFF1B000046C56 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				36F4CB691CEFF1A300046C56 /* Colours.swift */,
+				36F4CB691CEFF1A300046C56 /* Constants.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -274,12 +277,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				367703711CEFE275004F4726 /* DisplayCase.xcdatamodeld in Sources */,
-				36F4CB6A1CEFF1A300046C56 /* Colours.swift in Sources */,
+				36F4CB6A1CEFF1A300046C56 /* Constants.swift in Sources */,
 				36F4CB731CF0D66200046C56 /* MaterialButton.swift in Sources */,
 				3677036B1CEFE275004F4726 /* ViewController.swift in Sources */,
 				367703691CEFE275004F4726 /* AppDelegate.swift in Sources */,
 				36F4CB681CEFF11E00046C56 /* MaterialView.swift in Sources */,
 				36F4CB751CF0DB1900046C56 /* MaterialTextField.swift in Sources */,
+				36D516351CF237C0000F8BB1 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
