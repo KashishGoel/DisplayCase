@@ -74,6 +74,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func emailButtonPressed(sender: AnyObject) {
+        if emailTextField.text != "" && passTextField.text != "" {
         FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passTextField.text!, completion: { (user, error) in
             if error != nil {FIRAuth.auth()?.createUserWithEmail(self.emailTextField.text!, password: self.passTextField.text!, completion: { (user, error) in
                 NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
@@ -89,7 +90,7 @@ class ViewController: UIViewController {
             }
         })
         
-    
+        }
         
     }
     
