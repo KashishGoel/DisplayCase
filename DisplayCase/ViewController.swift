@@ -102,6 +102,7 @@ class ViewController: UIViewController {
     func showError(title: String, message: String){
     let alertVC = PMAlertController(title: title, description: message, image: UIImage(named: "flag.png"), style: PMAlertControllerStyle.Alert)
         
+        alertVC.alertImage = UIImageView(image: UIImage(named: "alertBG"))
         alertVC.addAction(PMAlertAction(title: "Cancel", style: .Cancel, action: { 
             print("Cancel button tapped on AlertVc")
         }))
