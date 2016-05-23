@@ -10,6 +10,7 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
+import PMAlertController
 
 
 
@@ -92,6 +93,24 @@ class ViewController: UIViewController {
         
         }
         
+        else {
+        showError("Something went wrong!", message: "You forgot to add a username/password!")
+        }
+        
+    }
+    
+    func showError(title: String, message: String){
+    let alertVC = PMAlertController(title: title, description: message, image: UIImage(named: "flag.png"), style: PMAlertControllerStyle.Alert)
+        
+        alertVC.addAction(PMAlertAction(title: "Cancel", style: .Cancel, action: { 
+            print("Cancel button tapped on AlertVc")
+        }))
+        
+        alertVC.addAction(PMAlertAction(title: "Ok", style: .Default, action: { 
+            print("Ok clicked on AlertVc")
+        }))
+        self.presentViewController(alertVC, animated: true, completion: nil)
+    
     }
     
 }
