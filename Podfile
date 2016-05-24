@@ -7,7 +7,7 @@ target 'DisplayCase' do
 
 pod 'Firebase'
 pod 'Firebase/Auth'
-
+pod 'Firebase/Database'
 end
 
 source 'https://github.com/CocoaPods/Specs.git'

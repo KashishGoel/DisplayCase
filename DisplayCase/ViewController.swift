@@ -10,6 +10,7 @@ import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
+import FirebaseDatabase
 import PMAlertController
 
 
@@ -19,9 +20,14 @@ class ViewController: UIViewController {
     @IBOutlet var emailTextField: MaterialTextField!
     @IBOutlet var passTextField: MaterialTextField!
     
+     var ref:FIRDatabaseReference!
     override func viewDidLoad() {
         
         super.viewDidLoad()
+//        if FIRAuth.auth()?.currentUser != nil {
+//        self.performSegueWithIdentifier("showLoggedIn", sender: self)
+//        }
+        
         fbButton.setTitle("FB Login", forState: UIControlState.Normal)
         fbButton.addTarget(self, action: #selector(ViewController.loginButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -69,6 +75,12 @@ class ViewController: UIViewController {
             if NSUserDefaults.standardUserDefaults().valueForKey(uuidKey) != nil {
                     self.performSegueWithIdentifier("showLoggedIn", sender: self)
             }
+        ref = FIRDatabase.database().reference()
+        
+        
+//        if FIRAuth.auth()?.currentUser != nil {
+//            self.performSegueWithIdentifier("showLoggedIn", sender: self)
+//        }
     
             
         
@@ -79,8 +91,25 @@ class ViewController: UIViewController {
         FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passTextField.text!, completion: { (user, error) in
             if error != nil {FIRAuth.auth()?.createUserWithEmail(self.emailTextField.text!, password: self.passTextField.text!, completion: { (user, error) in
                 NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
+//                self.ref.child("users").child(user!.uid).setValue(["username": "USER!"])
                 NSUserDefaults.standardUserDefaults().synchronize()
-                 print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
+                // print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
+               
+                    let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+                    changeRequest?.displayName = "User1"
+                    changeRequest?.commitChangesWithCompletion() { (error) in
+                      
+                            if let error = error {
+                               // self.showMessagePrompt(error.localizedDescription)
+                                return
+                            }
+                            // [START basic_write]
+                            self.ref.child("users").child(user!.uid).setValue(["username": "User1"])
+                            // [END basic_write]
+                            
+                        
+                    }
+             
                 
                     self.performSegueWithIdentifier("showLoggedIn", sender: self)
                
