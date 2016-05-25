@@ -63,7 +63,7 @@ class ViewController: UIViewController {
                                 return
                             }
                             // [START basic_write]
-//                            self.ref.child("users").child(user!.uid).setValue(["username": "User2"])
+                           self.ref.child("users").child(user!.uid).setValue(["username": "UserFromFB"])
 //                            //                        let key = self.ref.child("posts").childByAutoId().key
 //                            //                        self.ref.child("posts").child(key).setValue("This is it")
 //                            let key = self.ref.child("posts").childByAutoId().key
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
 //                                "body": "This is another test post description"]
 //                            let childUpdates = ["/posts/\(key)": post]
 //                            self.ref.child("users").child(user!.uid).child("posts").setValue([key:"true"])
-                            self.ref.child("users").child(user!.uid).child("provider").setValue(user?.providerID)
+                            self.ref.child("users").child(user!.uid).child("provider").setValue("Facebook")
                           //  self.ref.updateChildValues(childUpdates)
                             // [END basic_write]
                             
