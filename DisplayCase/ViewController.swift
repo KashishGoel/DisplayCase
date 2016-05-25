@@ -54,7 +54,33 @@ class ViewController: UIViewController {
                     FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
                         NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
                         NSUserDefaults.standardUserDefaults().synchronize()
-                        print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
+                        let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+                        changeRequest?.displayName = "UserThat"
+                        changeRequest?.commitChangesWithCompletion() { (error) in
+                            
+                            if let error = error {
+                                // self.showMessagePrompt(error.localizedDescription)
+                                return
+                            }
+                            // [START basic_write]
+//                            self.ref.child("users").child(user!.uid).setValue(["username": "User2"])
+//                            //                        let key = self.ref.child("posts").childByAutoId().key
+//                            //                        self.ref.child("posts").child(key).setValue("This is it")
+//                            let key = self.ref.child("posts").childByAutoId().key
+//                            let post = ["uid": user!.uid,
+//                                "author": "Kash2",
+//                                "url": "www.url.com/",
+//                                "body": "This is another test post description"]
+//                            let childUpdates = ["/posts/\(key)": post]
+//                            self.ref.child("users").child(user!.uid).child("posts").setValue([key:"true"])
+                            self.ref.child("users").child(user!.uid).child("provider").setValue(user?.providerID)
+                          //  self.ref.updateChildValues(childUpdates)
+                            // [END basic_write]
+                            
+                            
+                        }
+                        
+                        //print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
                         self.performSegueWithIdentifier("showLoggedIn", sender: self)
                     })
                 }
@@ -78,6 +104,8 @@ class ViewController: UIViewController {
         ref = FIRDatabase.database().reference()
         
         
+        
+        
 //        if FIRAuth.auth()?.currentUser != nil {
 //            self.performSegueWithIdentifier("showLoggedIn", sender: self)
 //        }
@@ -96,7 +124,7 @@ class ViewController: UIViewController {
                 // print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
                
                     let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
-                    changeRequest?.displayName = "User1"
+                    changeRequest?.displayName = "UserThat"
                     changeRequest?.commitChangesWithCompletion() { (error) in
                       
                             if let error = error {
@@ -104,9 +132,20 @@ class ViewController: UIViewController {
                                 return
                             }
                             // [START basic_write]
-                            self.ref.child("users").child(user!.uid).setValue(["username": "User1"])
+                            self.ref.child("users").child(user!.uid).setValue(["username": "User2"])
+//                        let key = self.ref.child("posts").childByAutoId().key
+//                        self.ref.child("posts").child(key).setValue("This is it")
+                        let key = self.ref.child("posts").childByAutoId().key
+                        let post = ["uid": user!.uid,
+                            "author": "Kash2",
+                            "url": "www.url.com/",
+                            "body": "This is another test post description"]
+                        let childUpdates = ["/posts/\(key)": post]
+                        self.ref.child("users").child(user!.uid).child("posts").setValue([key:"true"])
+                        self.ref.child("users").child(user!.uid).child("provider").setValue(user?.providerID)
+                        self.ref.updateChildValues(childUpdates)
                             // [END basic_write]
-                            
+                        
                         
                     }
              
