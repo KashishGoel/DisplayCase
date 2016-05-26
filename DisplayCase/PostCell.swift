@@ -45,18 +45,30 @@ class PostCell: UITableViewCell {
         descriptionBody?.text = post.body
       
         likesLabel?.text = String(post.likes)
+        print("here")
         
         if post.url.isEmpty == false{
+            print("here1")
             if img != nil {
+                print("here2")
                 self.showCaseImage?.image = img}
             else {
-            request = Alamofire.request(.GET, post.url).validate(contentType: ["image/s"]).response(completionHandler: { (request, response, data, error) in
+                print("here3")
+            request = Alamofire.request(.GET, post.url).validate(contentType: ["image/*"]).response(completionHandler: { (request, response, data, error) in
                 if error == nil {
+                    print("here4")
                 
-                    if let img = UIImage(data: data!) {
+                     let img = UIImage(data: data!)
+                        print("here5")
                     self.showCaseImage?.image = img
-                        FeedVC.imageCache.setObject(img, forKey: self.post.url)
-                    }                }
+                        FeedVC.imageCache.setObject(img!, forKey: self.post.url)
+                    
+                }
+                else {
+                print(error?.description)
+                }
+                
+                
             })
             }
         }

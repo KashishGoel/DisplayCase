@@ -60,6 +60,7 @@ class ViewController: UIViewController {
                             
                             if let error = error {
                                 // self.showMessagePrompt(error.localizedDescription)
+                                print(error)
                                 return
                             }
                             // [START basic_write]
@@ -128,6 +129,7 @@ class ViewController: UIViewController {
                     changeRequest?.commitChangesWithCompletion() { (error) in
                       
                             if let error = error {
+                                print(error)
                                // self.showMessagePrompt(error.localizedDescription)
                                 return
                             }

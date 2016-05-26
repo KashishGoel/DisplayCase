@@ -78,17 +78,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         print(post.body)
         
         if let cell = tableView.dequeueReusableCellWithIdentifier("postCell") as? PostCell{
+           //cell.request?.cancel()
+//
             var img:UIImage?
             
-            
-            
+//            
             if post.url.isEmpty == false{
+                
                 let url = post.url
                 img = FeedVC.imageCache.objectForKey(url) as? UIImage
+            
             }
-            
-            
-            
             
             cell.configureCell(post, img: img)
             return cell
