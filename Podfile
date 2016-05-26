@@ -15,3 +15,4 @@ platform :ios, '9.0'
 use_frameworks!
 
 pod 'PMAlertController'
+pod 'Alamofire', '~> 3.4'

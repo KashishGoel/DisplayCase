@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import Alamofire
+
 
 class PostCell: UITableViewCell {
     @IBOutlet weak var profileImage:UIImageView?
@@ -15,6 +18,8 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likesLabel:UILabel?
     
     var post:Post!
+    
+    var request:Request?
     override func awakeFromNib() {
      
 }
@@ -32,7 +37,7 @@ class PostCell: UITableViewCell {
         
     }
     
-    func configureCell(post: Post){
+    func configureCell(post: Post, img: UIImage?){
         
     self.post = post
         
@@ -41,8 +46,26 @@ class PostCell: UITableViewCell {
       
         likesLabel?.text = String(post.likes)
         
+        if post.url.isEmpty == false{
+            if img != nil {
+                self.showCaseImage?.image = img}
+            else {
+            request = Alamofire.request(.GET, post.url).validate(contentType: ["image/s"]).response(completionHandler: { (request, response, data, error) in
+                if error == nil {
+                
+                    if let img = UIImage(data: data!) {
+                    self.showCaseImage?.image = img
+                        FeedVC.imageCache.setObject(img, forKey: self.post.url)
+                    }                }
+            })
+            }
+        }
         
+        else {
+        self.showCaseImage?.hidden = true
+        }
         
+    
         
     
     }

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>PMAlertController-PMAlertController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,12 +32,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1242553A49FE9B0111172C86388F5E12</key>
+		<key>3638FD83437B202C5A8BFFD0835C0945</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2E94E37EF5B24D3DCAB4453D8215E96F</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>933D7E92F109DB31B3731639500E33E0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

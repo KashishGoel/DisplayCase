@@ -37,12 +37,7 @@ class Post{
     return _url!
    }
     
-//    var author:String!
-//    var body:String!
-//    var likes:Int!
-//    var url:String
-  
-    
+
    
     
     init (author:String,body:String, likes:Int, url:String) {
