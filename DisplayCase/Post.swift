@@ -64,6 +64,10 @@ class Post{
         self._body = description as! String
         }
         
+        if let name = dictionary["author"]{
+        self._author = name as! String
+        }
+        
         
     
     }

@@ -16,6 +16,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var showCaseImage:UIImageView?
     @IBOutlet weak var descriptionBody:UITextView?
     @IBOutlet weak var likesLabel:UILabel?
+    @IBOutlet weak var name:UILabel?
     
     var post:Post!
     
@@ -45,21 +46,23 @@ class PostCell: UITableViewCell {
         descriptionBody?.text = post.body
       
         likesLabel?.text = String(post.likes)
-        print("here")
+        
+        name?.text = post.author
+      
         
         if post.url.isEmpty == false{
-            print("here1")
+            
             if img != nil {
-                print("here2")
+                
                 self.showCaseImage?.image = img}
             else {
-                print("here3")
+               
             request = Alamofire.request(.GET, post.url).validate(contentType: ["image/*"]).response(completionHandler: { (request, response, data, error) in
                 if error == nil {
-                    print("here4")
+                   
                 
                      let img = UIImage(data: data!)
-                        print("here5")
+                    
                     self.showCaseImage?.image = img
                         FeedVC.imageCache.setObject(img!, forKey: self.post.url)
                     

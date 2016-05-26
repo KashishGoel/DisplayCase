@@ -205,7 +205,7 @@
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="364" id="Bk5-hw-3mh" customClass="PostCell" customModule="DisplayCase" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="postCell" id="Bk5-hw-3mh" customClass="PostCell" customModule="DisplayCase" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="560" height="364"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bk5-hw-3mh" id="JkA-aw-R3f">
@@ -296,6 +296,7 @@
                                         <connections>
                                             <outlet property="descriptionBody" destination="Y9Y-LU-Ed7" id="rDf-Ra-iVK"/>
                                             <outlet property="likesLabel" destination="E4N-qg-rI6" id="C6R-R0-FFR"/>
+                                            <outlet property="name" destination="hRU-Xp-ajw" id="50r-D5-aq5"/>
                                             <outlet property="profileImage" destination="bcv-hr-ohu" id="sDW-Uf-xAl"/>
                                             <outlet property="showCaseImage" destination="ivm-C4-xgm" id="Kec-h9-qaA"/>
                                         </connections>

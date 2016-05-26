@@ -24,6 +24,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         postRef = ref.child("posts")
+        tableView.estimatedRowHeight = 364
         
         
         self.posts = []
@@ -78,7 +79,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         print(post.body)
         
         if let cell = tableView.dequeueReusableCellWithIdentifier("postCell") as? PostCell{
-           //cell.request?.cancel()
+           cell.request?.cancel()
 //
             var img:UIImage?
             
@@ -99,6 +100,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         
         //return tableView.dequeueReusableCellWithIdentifier("postCell") as! PostCell
+        
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let post = posts[indexPath.row]
+        
+        if post.url.isEmpty {
+        return 200
+        }
+        else {
+        return tableView.estimatedRowHeight
+        }
         
     }
     
