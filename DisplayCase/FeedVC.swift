@@ -36,7 +36,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             if let snapshots = snapshot.children.allObjects as? [FIRDataSnapshot] {
 //            print(snapshots)
-                let count = snapshots.count
+//                let count = snapshots.count
                 for snap in snapshots {
                 print("snap: \(snap)")
                     
@@ -75,7 +75,17 @@ self.tableView.reloadData()
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let post = posts[indexPath.row]
         print(post.body)
+        if let cell = tableView.dequeueReusableCellWithIdentifier("postCell") as? PostCell{
+            cell.configureCell(post)
+            return cell
+        }
+
+        else {
         return tableView.dequeueReusableCellWithIdentifier("postCell") as! PostCell
+        }
+
+        //return tableView.dequeueReusableCellWithIdentifier("postCell") as! PostCell
+    
     }
     
    
