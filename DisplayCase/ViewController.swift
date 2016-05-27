@@ -55,6 +55,7 @@ class ViewController: UIViewController {
                         NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
                         NSUserDefaults.standardUserDefaults().synchronize()
                         let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
+                        
                         changeRequest?.displayName = "UserThat"
                         changeRequest?.commitChangesWithCompletion() { (error) in
                             
