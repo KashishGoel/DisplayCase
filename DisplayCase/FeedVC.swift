@@ -9,10 +9,12 @@
 import UIKit
 import FirebaseDatabase
 import Firebase
+import Alamofire
 
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var cameraButton:UIImageView!
+    @IBOutlet var postDescription:UITextField!
     let ref:FIRDatabaseReference = FIRDatabase.database().reference()
     var refHandle:FIRDatabaseHandle!
     var postRef:FIRDatabaseReference!
@@ -140,6 +142,57 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
+    
+    @IBAction func postButtonPressed(sender: AnyObject) {
+        print("pressed")
+        if let text = postDescription.text where postDescription.text != "" {
+            if let img = cameraButton.image {
+            let postUrl = "https://post.imageshack.us/upload_api.php"
+                let url = NSURL(string: postUrl)
+                let imgData = UIImageJPEGRepresentation(img, 0.1)
+                let apiKey = "12DJKPSU5fc3afbd01b1630cc718cae3043220f3".dataUsingEncoding(NSUTF8StringEncoding)
+                
+                let json = "json".dataUsingEncoding(NSUTF8StringEncoding)
+                
+                Alamofire.upload(.POST, url!, multipartFormData: { (MultiPartFormData) in
+                    MultiPartFormData.appendBodyPart(data: imgData!, name: "fileupload", fileName: "image", mimeType: "image/jpg")
+                    MultiPartFormData.appendBodyPart(data: apiKey!, name: "key")
+                    MultiPartFormData.appendBodyPart(data: json!, name: "format")
+                }) {encodingResult in
+                    
+                    switch(encodingResult){
+                    case .Success(let upload, _, _):
+                        upload.responseJSON { response in
+                            
+                            if let info = response.result.value as? Dictionary<String, AnyObject> {
+                                
+                                
+                                
+                                if let links = info["links"] as? Dictionary<String, AnyObject> {
+                                    
+                                    if let imgLink = links["image_link"] as? String {
+                                        
+                                        print("LINK: \(imgLink)")
+                                        
+                                    }
+                                    
+                                }
+                                
+                            }
+                            
+                        } case .Failure(let error):
+                            
+                            print(error)
+                    
+                    }
+                    
+                }
+            }
+        
+        postDescription.text = ""
+            cameraButton.image = UIImage(named: "camera")
+        }
+    }
     
 }
 

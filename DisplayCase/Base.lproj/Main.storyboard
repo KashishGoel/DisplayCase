@@ -236,6 +236,9 @@
                                                 <state key="normal" title="POST">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="postButtonPressed:" destination="oc6-qW-RPC" eventType="touchUpInside" id="66o-3g-YaS"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -373,6 +376,7 @@
                     <navigationItem key="navigationItem" id="Qlc-YQ-X0b"/>
                     <connections>
                         <outlet property="cameraButton" destination="Ky0-dq-yPu" id="Bsm-pU-Qkw"/>
+                        <outlet property="postDescription" destination="7Nf-wK-SMa" id="dSf-xV-6ub"/>
                         <outlet property="tableView" destination="cce-WN-yaY" id="Pg8-Z2-8gJ"/>
                     </connections>
                 </viewController>
