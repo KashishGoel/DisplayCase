@@ -208,18 +208,22 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yWy-SH-y2h">
                                         <rect key="frame" x="8" y="7" width="544" height="49"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Talk about it.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Nf-wK-SMa" customClass="MaterialTextField" customModule="DisplayCase" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Talk about it.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Nf-wK-SMa" customClass="MaterialTextField" customModule="DisplayCase" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="437" height="49"/>
                                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="Ky0-dq-yPu">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="Ky0-dq-yPu">
                                                 <rect key="frame" x="447" y="0.0" width="37" height="49"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="37" id="KKV-7L-YsA"/>
                                                     <constraint firstAttribute="width" constant="37" id="keX-3n-UeW"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="5ke-fx-N93" appends="YES" id="2gi-De-RYn"/>
+                                                </connections>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f9p-p6-MvV" customClass="MaterialButton" customModule="DisplayCase" customModuleProvider="target">
                                                 <rect key="frame" x="494" y="0.0" width="50" height="49"/>
@@ -368,10 +372,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="Qlc-YQ-X0b"/>
                     <connections>
+                        <outlet property="cameraButton" destination="Ky0-dq-yPu" id="Bsm-pU-Qkw"/>
                         <outlet property="tableView" destination="cce-WN-yaY" id="Pg8-Z2-8gJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qlh-NK-DiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="5ke-fx-N93"/>
             </objects>
             <point key="canvasLocation" x="1802" y="348"/>
         </scene>

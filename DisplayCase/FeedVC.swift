@@ -10,21 +10,33 @@ import UIKit
 import FirebaseDatabase
 import Firebase
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var cameraButton:UIImageView!
     let ref:FIRDatabaseReference = FIRDatabase.database().reference()
     var refHandle:FIRDatabaseHandle!
     var postRef:FIRDatabaseReference!
     var posts:[Post] = []
+    var tapGesture = UITapGestureRecognizer()
+    
+    var imagePicker = UIImagePickerController()
+
     static var imageCache = NSCache()
     //    let post:Post = Post()
     // let post:PostData = PostData()
+    
     
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
         postRef = ref.child("posts")
         tableView.estimatedRowHeight = 364
+        imagePicker.delegate = self
+        tapGesture.numberOfTapsRequired = 1
+    
+        tapGesture.addTarget(self, action: "showImagePicker")
+        cameraButton.addGestureRecognizer(tapGesture)
+        
         
         
         self.posts = []
@@ -116,6 +128,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    //image picker
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        cameraButton.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+    }
+    
+    func showImagePicker(){
+      print("here")
+    self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
     
     
 }
