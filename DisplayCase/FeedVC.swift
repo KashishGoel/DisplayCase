@@ -220,6 +220,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         let childUpdates = ["/posts/\(key)": post]
         self.ref.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("posts").setValue([key:"true"])
         self.ref.updateChildValues(childUpdates)
+            tableView.reloadData()
             print("uploaded to firebase")
             
             }
