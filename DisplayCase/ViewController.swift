@@ -76,7 +76,7 @@ class ViewController: UIViewController {
 //                            let childUpdates = ["/posts/\(key)": post]
 //                            self.ref.child("users").child(user!.uid).child("posts").setValue([key:"true"])
                             self.ref.child("users").child(user!.uid).child("provider").setValue("Facebook")
-                          //  self.ref.updateChildValues(childUpdates)
+                        //   self.ref.updateChildValues(childUpdates)
                             // [END basic_write]
                             
                             

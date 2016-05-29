@@ -36,7 +36,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker.delegate = self
         tapGesture.numberOfTapsRequired = 1
     
-        tapGesture.addTarget(self, action: "showImagePicker")
+        tapGesture.addTarget(self, action: #selector(FeedVC.showImagePicker))
         cameraButton.addGestureRecognizer(tapGesture)
         
         
@@ -138,13 +138,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     func showImagePicker(){
-      print("here")
+      //print("here")
     self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     
     @IBAction func postButtonPressed(sender: AnyObject) {
         print("pressed")
+        print(postDescription.text)
         if let text = postDescription.text where postDescription.text != "" {
             if let img = cameraButton.image {
             let postUrl = "https://post.imageshack.us/upload_api.php"
@@ -173,7 +174,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                     if let imgLink = links["image_link"] as? String {
                                         
                                         print("LINK: \(imgLink)")
-                                        
+                                        //self.ref.child("users").child(user!.uid).setValue(["username": username])
+                                                                                            //let key = self.ref.child("posts").childByAutoId().key
+                                                                                           // self.ref.child("posts").child(key).setValue("This is it")
+                                        self.addPostToFirebase(imgLink, description: self.postDescription.text!)
+                                        self.postDescription.text = ""
+                                    }
+                                    else {
+                                    self.addPostToFirebase(nil, description: self.postDescription.text!)
+                                         self.postDescription.text = ""
                                     }
                                     
                                 }
@@ -189,9 +198,38 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 }
             }
         
-        postDescription.text = ""
+        
             cameraButton.image = UIImage(named: "camera")
         }
+    }
+    
+    func addPostToFirebase(imgUrl: String?, description:String) {
+        let key = self.ref.child("posts").childByAutoId().key
+        guard let authorName = FIRAuth.auth()?.currentUser?.displayName where FIRAuth.auth()?.currentUser?.displayName != nil else {
+        return }
+        
+        if imgUrl != nil {
+        
+        
+        if let postBody = self.postDescription.text where self.postDescription.text != nil {
+            
+        let post:[String:AnyObject] = ["author": authorName,
+                    "body": postBody,
+                     "likes": 0,
+                    "url": imgUrl!]
+        let childUpdates = ["/posts/\(key)": post]
+        self.ref.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("posts").setValue([key:"true"])
+        self.ref.updateChildValues(childUpdates)
+            print("uploaded to firebase")
+            
+            }
+        else {
+            print("post desc is empty")
+            }
+            
+        }
+        
+    
     }
     
 }
