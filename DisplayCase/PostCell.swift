@@ -58,6 +58,7 @@ class PostCell: UITableViewCell {
           
             
         })
+        
     }
     
     override func drawRect(rect: CGRect) {

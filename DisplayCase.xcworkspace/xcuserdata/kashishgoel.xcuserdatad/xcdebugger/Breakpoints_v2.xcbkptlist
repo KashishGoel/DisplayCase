@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DisplayCase/PostCell.swift"
-            timestampString = "486361577.141087"
+            timestampString = "486363496.801162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "drawRect(_:)"
             landmarkType = "5">
          </BreakpointContent>

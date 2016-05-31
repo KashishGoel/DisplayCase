@@ -88,6 +88,8 @@ class Post{
         _likes = _likes - 1
              _postRef.child("likes").setValue(_likes)
         }
+        
+        FIRDatabase.database().reference().child("posts").child(postKey).child("likes").setValue(_likes)
     
     }
     
