@@ -136,17 +136,10 @@ class ViewController: UIViewController {
                             }
                             // [START basic_write]
                             self.ref.child("users").child(user!.uid).setValue(["username": "User2"])
-//                        let key = self.ref.child("posts").childByAutoId().key
-//                        self.ref.child("posts").child(key).setValue("This is it")
-                        let key = self.ref.child("posts").childByAutoId().key
-                        let post = ["uid": user!.uid,
-                            "author": "Kash2",
-                            "url": "www.url.com/",
-                            "body": "This is another test post description"]
-                        let childUpdates = ["/posts/\(key)": post]
-                        self.ref.child("users").child(user!.uid).child("posts").setValue([key:"true"])
+
+                       
                         self.ref.child("users").child(user!.uid).child("provider").setValue(user?.providerID)
-                        self.ref.updateChildValues(childUpdates)
+                        
                             // [END basic_write]
                         
                         

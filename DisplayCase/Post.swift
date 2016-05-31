@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import FirebaseDatabase
+import Firebase
 
 class Post{
 
@@ -19,6 +20,7 @@ class Post{
 //     private var _uid:String!
     var _url:String?
      var _postKey:String!
+    var _postRef:FIRDatabaseReference!
    
     
     var author:String {
@@ -37,6 +39,9 @@ class Post{
     return _url!
    }
     
+    var postKey:String{
+    return _postKey
+    }
 
    
     
@@ -66,12 +71,25 @@ class Post{
         
         if let name = dictionary["author"]{
         self._author = name as! String
+            self._postRef =  FIRDatabase.database().reference().child("users").child(currentUserId!).child("likes").child(_postKey)
         }
         
         
     
     }
     
+    
+    func addLikes(add:Bool){
+        if add == true {
+        _likes = _likes + 1
+            _postRef.child("likes").setValue(_likes)
+        }
+        else {
+        _likes = _likes - 1
+             _postRef.child("likes").setValue(_likes)
+        }
+    
+    }
     
     
     

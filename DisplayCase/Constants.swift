@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
-
+import Firebase
 let shadowColor:CGFloat = 157.0/255.0
 let uuidKey = ""
+
+
+let currentUserId = FIRAuth.auth()?.currentUser?.uid

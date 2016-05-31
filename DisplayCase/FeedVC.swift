@@ -147,6 +147,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         print("pressed")
         print(postDescription.text)
         if let text = postDescription.text where postDescription.text != "" {
+            print(text)
             if let img = cameraButton.image {
             let postUrl = "https://post.imageshack.us/upload_api.php"
                 let url = NSURL(string: postUrl)

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EFDC4DA0816DFFB67E1865BC'
+               BlueprintIdentifier = 'E5AB1C0293AFBBE30818EC1F7565FA51'
                BlueprintName = 'PMAlertController'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'PMAlertController.framework'>

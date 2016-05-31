@@ -31,7 +31,7 @@ PODS:
   - GoogleSymbolUtilities (1.1.1)
   - GoogleUtilities (1.3.1):
     - GoogleSymbolUtilities (~> 1.0)
-  - PMAlertController (1.0.3)
+  - PMAlertController (1.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 3.4)
@@ -51,6 +51,8 @@ SPEC CHECKSUMS:
   GoogleNetworkingUtilities: 3e83269048cfb498dc7ec83ab36813360965c74f
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
-  PMAlertController: 1a43fb5b3fc5c4e50d52a73a330d5896faf74877
+  PMAlertController: 7f969c937a80bea634a5bf957b66943b493e1aca
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: dfda5ca0a857b2b64ef89f100ea73d1830e15e7a
+
+COCOAPODS: 1.0.0
