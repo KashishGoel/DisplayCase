@@ -79,7 +79,7 @@ class Post{
     }
     
     
-    func addLikes(add:Bool){
+    func addLikes(_ add:Bool){
         if add == true {
         _likes = _likes + 1
             _postRef.child("likes").setValue(_likes)

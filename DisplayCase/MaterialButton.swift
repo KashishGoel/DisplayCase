@@ -14,8 +14,8 @@ class MaterialButton: UIButton {
         layer.cornerRadius = 4.0
         layer.shadowRadius = 5.0
         layer.shadowOpacity = 0.8
-        layer.shadowColor = UIColor(red: shadowColor, green: shadowColor, blue: shadowColor, alpha: 0.5).CGColor
-        layer.shadowOffset = CGSizeMake(0.0, 2.0)
+        layer.shadowColor = UIColor(red: shadowColor, green: shadowColor, blue: shadowColor, alpha: 0.5).cgColor
+        layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
     }
 
 }

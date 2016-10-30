@@ -9,16 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>PMAlertController-PMAlertController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>PMAlertController.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-DisplayCase.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,22 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<key>13D4706005247D892F356ED2E411F5EE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C1897519D26204D80733743D8F2ABA89</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C2AB96F7E8DD8856CD05BD74C0ABBF9C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E5AB1C0293AFBBE30818EC1F7565FA51</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>

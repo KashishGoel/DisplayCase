@@ -20,10 +20,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var postRef:FIRDatabaseReference!
     var posts:[Post] = []
     var tapGesture = UITapGestureRecognizer()
+    @IBOutlet var webView:UIWebView!
     
     var imagePicker = UIImagePickerController()
 
-    static var imageCache = NSCache()
+    static var imageCache = NSCache<AnyObject, AnyObject>()
+    
     //    let post:Post = Post()
     // let post:PostData = PostData()
     
@@ -35,6 +37,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         tableView.estimatedRowHeight = 364
         imagePicker.delegate = self
         tapGesture.numberOfTapsRequired = 1
+
     
         tapGesture.addTarget(self, action: #selector(FeedVC.showImagePicker))
         cameraButton.addGestureRecognizer(tapGesture)
@@ -42,7 +45,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
         
         self.posts = []
-        refHandle = postRef.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+        refHandle = postRef.observe(FIRDataEventType.value, with: { (snapshot) in
+            print(snapshot)
             //            let postDict = snapshot.value as! [String : AnyObject]
             //           // print(postDict)
             //            let key = snapshot.key
@@ -84,15 +88,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         })
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return posts.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = posts[(indexPath as NSIndexPath).row]
         print(post.body)
         
-        if let cell = tableView.dequeueReusableCellWithIdentifier("postCell") as? PostCell{
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "postCell") as? PostCell{
            cell.request?.cancel()
 //
             var img:UIImage?
@@ -101,7 +106,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if post.url.isEmpty == false{
                 
                 let url = post.url
-                img = FeedVC.imageCache.objectForKey(url) as? UIImage
+                img = FeedVC.imageCache.object(forKey: url as AnyObject) as? UIImage
             
             }
             
@@ -110,15 +115,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
             
         else {
-            return tableView.dequeueReusableCellWithIdentifier("postCell") as! PostCell
+            return tableView.dequeueReusableCell(withIdentifier: "postCell") as! PostCell
         }
         
         //return tableView.dequeueReusableCellWithIdentifier("postCell") as! PostCell
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let post = posts[indexPath.row]
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let post = posts[(indexPath as NSIndexPath).row]
         
         if post.url.isEmpty {
         return 200
@@ -132,71 +137,126 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     //image picker
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        imagePicker.dismiss(animated: true, completion: nil)
         cameraButton.image = info[UIImagePickerControllerOriginalImage] as? UIImage
     }
     
     func showImagePicker(){
       //print("here")
-    self.presentViewController(imagePicker, animated: true, completion: nil)
+    self.present(imagePicker, animated: true, completion: nil)
     }
     
     
-    @IBAction func postButtonPressed(sender: AnyObject) {
+    @IBAction func postButtonPressed(_ sender: AnyObject) {
         print("pressed")
         print(postDescription.text)
-        if let text = postDescription.text where postDescription.text != "" {
+        if let text = postDescription.text , postDescription.text != "" {
             print(text)
             if let img = cameraButton.image {
-            let postUrl = "https://post.imageshack.us/upload_api.php"
-                let url = NSURL(string: postUrl)
+            let postUrl = "https://post.imageshack.us/upload_api.php/post"
+                let url = URL(string: postUrl)
                 let imgData = UIImageJPEGRepresentation(img, 0.1)
-                let apiKey = "12DJKPSU5fc3afbd01b1630cc718cae3043220f3".dataUsingEncoding(NSUTF8StringEncoding)
+                let apiKey = "12DJKPSU5fc3afbd01b1630cc718cae3043220f3".data(using: String.Encoding.utf8)
                 
-                let json = "json".dataUsingEncoding(NSUTF8StringEncoding)
+                let json = "json".data(using: String.Encoding.utf8)
                 
-                Alamofire.upload(.POST, url!, multipartFormData: { (MultiPartFormData) in
-                    MultiPartFormData.appendBodyPart(data: imgData!, name: "fileupload", fileName: "image", mimeType: "image/jpg")
-                    MultiPartFormData.appendBodyPart(data: apiKey!, name: "key")
-                    MultiPartFormData.appendBodyPart(data: json!, name: "format")
-                }) {encodingResult in
-                    
-                    switch(encodingResult){
-                    case .Success(let upload, _, _):
-                        upload.responseJSON { response in
+
+                
+                
+                Alamofire.upload(
+                    multipartFormData: { multipartFormData in
+                        //multipartFormData.append(uploadData, withName: "upload_data")
+                        multipartFormData.append(imgData!, withName: "fileupload", fileName: "image", mimeType: "image/jpg")
+                        multipartFormData.append(apiKey!, withName: "key")
+                        multipartFormData.append(json!, withName: "format")
+                        
+                        //formData = multipartFormData
+                    },
+                    to: url!,
+                    encodingCompletion: { result in
+                        switch result {
+                        case .success(let upload, _, _):
+                            upload.responseJSON(completionHandler: { response in
                             
-                            if let info = response.result.value as? Dictionary<String, AnyObject> {
-                                
-                                
-                                
-                                if let links = info["links"] as? Dictionary<String, AnyObject> {
+                                if let info = response.result.value as? Dictionary<String, AnyObject> {
                                     
-                                    if let imgLink = links["image_link"] as? String {
+                                    
+                                    
+                                    if let links = info["links"] as? Dictionary<String, AnyObject> {
                                         
-                                        print("LINK: \(imgLink)")
-                                        //self.ref.child("users").child(user!.uid).setValue(["username": username])
-                                                                                            //let key = self.ref.child("posts").childByAutoId().key
-                                                                                           // self.ref.child("posts").child(key).setValue("This is it")
-                                        self.addPostToFirebase(imgLink, description: self.postDescription.text!)
-                                        self.postDescription.text = ""
-                                    }
-                                    else {
-                                    self.addPostToFirebase(nil, description: self.postDescription.text!)
-                                         self.postDescription.text = ""
+                                        if let imgLink = links["image_link"] as? String {
+                                            
+                                            print("LINK: \(imgLink)")
+                                            //self.ref.child("users").child(user!.uid).setValue(["username": username])
+                                            //let key = self.ref.child("posts").childByAutoId().key
+                                            // self.ref.child("posts").child(key).setValue("This is it")
+                                            self.addPostToFirebase(imgLink, description: self.postDescription.text!)
+                                            self.postDescription.text = ""
+                                        }
+                                        else {
+                                            self.addPostToFirebase(nil, description: self.postDescription.text!)
+                                            self.postDescription.text = ""
+                                        }
+                                        
                                     }
                                     
                                 }
                                 
-                            }
+                                
+                            })
                             
-                        } case .Failure(let error):
                             
-                            print(error)
-                    
+                        case .failure(let err):
+                            print("errors:\n")
+                            print(err)
+                            //expectation.fulfill()
+                        }
                     }
-                    
-                }
+                )
+                
+                
+//                Alamofire.upload(.POST, url!, multipartFormData: { (MultiPartFormData) in
+//                    MultiPartFormData.appendBodyPart(data: imgData!, name: "fileupload", fileName: "image", mimeType: "image/jpg")
+//                    MultiPartFormData.appendBodyPart(data: apiKey!, name: "key")
+//                    MultiPartFormData.appendBodyPart(data: json!, name: "format")
+//                }) {encodingResult in
+//                    
+//                    switch(encodingResult){
+//                    case .Success(let upload, _, _):
+//                        upload.responseJSON { response in
+//                            
+//                            if let info = response.result.value as? Dictionary<String, AnyObject> {
+//                                
+//                                
+//                                
+//                                if let links = info["links"] as? Dictionary<String, AnyObject> {
+//                                    
+//                                    if let imgLink = links["image_link"] as? String {
+//                                        
+//                                        print("LINK: \(imgLink)")
+//                                        //self.ref.child("users").child(user!.uid).setValue(["username": username])
+//                                                                                            //let key = self.ref.child("posts").childByAutoId().key
+//                                                                                           // self.ref.child("posts").child(key).setValue("This is it")
+//                                        self.addPostToFirebase(imgLink, description: self.postDescription.text!)
+//                                        self.postDescription.text = ""
+//                                    }
+//                                    else {
+//                                    self.addPostToFirebase(nil, description: self.postDescription.text!)
+//                                         self.postDescription.text = ""
+//                                    }
+//                                    
+//                                }
+//                                
+//                            }
+//                            
+//                        } case .Failure(let error):
+//                            
+//                            print(error)
+//                    
+//                    }
+//                    
+//                }
             }
         
         
@@ -204,20 +264,20 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
     }
     
-    func addPostToFirebase(imgUrl: String?, description:String) {
+    func addPostToFirebase(_ imgUrl: String?, description:String) {
         let key = self.ref.child("posts").childByAutoId().key
-        guard let authorName = FIRAuth.auth()?.currentUser?.displayName where FIRAuth.auth()?.currentUser?.displayName != nil else {
+        guard let authorName = FIRAuth.auth()?.currentUser?.displayName , FIRAuth.auth()?.currentUser?.displayName != nil else {
         return }
         
         if imgUrl != nil {
         
         
-        if let postBody = self.postDescription.text where self.postDescription.text != nil {
+        if let postBody = self.postDescription.text , self.postDescription.text != nil {
             
-        let post:[String:AnyObject] = ["author": authorName,
-                    "body": postBody,
-                     "likes": 0,
-                    "url": imgUrl!]
+        let post:[String:AnyObject] = ["author": authorName as AnyObject,
+                    "body": postBody as AnyObject,
+                     "likes": 0 as AnyObject,
+                    "url": imgUrl! as AnyObject]
         let childUpdates = ["/posts/\(key)": post]
         self.ref.child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("posts").setValue([key:"true"])
         self.ref.updateChildValues(childUpdates)

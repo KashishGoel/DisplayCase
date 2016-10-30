@@ -22,6 +22,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var likePicture:UIImageView?
     
     var post:Post!
+    var animation:UIViewAnimationTransition?
     
     var ref:FIRDatabaseReference!
     
@@ -35,12 +36,14 @@ class PostCell: UITableViewCell {
         tapGesture.addTarget(self, action: #selector(PostCell.changeLikeButton(_:)))
         likePicture?.addGestureRecognizer(tapGesture)
         
+       
+        
     }
     
-    func changeLikeButton(sender:UITapGestureRecognizer) {
+    func changeLikeButton(_ sender:UITapGestureRecognizer) {
         ref = FIRDatabase.database().reference()
         
-        ref.child("users").child(currentUserId!).child("likes").child(post.postKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        ref.child("users").child(currentUserId!).child("likes").child(post.postKey).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             print(snapshot.value)
             if let doesNotExist = snapshot.value as? NSNull{
@@ -61,7 +64,7 @@ class PostCell: UITableViewCell {
         
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         profileImage!.layer.cornerRadius = profileImage!.frame.size.width/2
         profileImage?.clipsToBounds = true
         
@@ -70,14 +73,14 @@ class PostCell: UITableViewCell {
         
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         
     }
     
-    func configureCell(post: Post, img: UIImage?){
+    func configureCell(_ post: Post, img: UIImage?){
         
         self.post = post
-        
+        var response: DefaultDataResponse?
         
         descriptionBody?.text = post.body
         
@@ -92,33 +95,33 @@ class PostCell: UITableViewCell {
                 
                 self.showCaseImage?.image = img}
             else {
-                
-                request = Alamofire.request(.GET, post.url).validate(contentType: ["image/*"]).response(completionHandler: { (request, response, data, error) in
-                    if error == nil {
+                request = Alamofire.request(post.url).validate(contentType: ["image/*"]).response(completionHandler: { (resp) in
+                    response = resp
+                    if (response?.error == nil) {
                         
-                        
-                        let img = UIImage(data: data!)
-                        
+                        let img = UIImage(data: (response?.data)!)
                         self.showCaseImage?.image = img
-                        FeedVC.imageCache.setObject(img!, forKey: self.post.url)
+                        FeedVC.imageCache.setObject(img!, forKey: self.post.url as AnyObject)
                         
                     }
                     else {
-                        print(error?.description)
+                        print("err:\n")
+                        print(response?.error)
                     }
                     
-                    
                 })
+
+                
             }
         }
             
         else {
-            self.showCaseImage?.hidden = true
+            self.showCaseImage?.isHidden = true
         }
         
         ref = FIRDatabase.database().reference()
         
-        ref.child("users").child(currentUserId!).child("likes").child(post.postKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        ref.child("users").child(currentUserId!).child("likes").child(post.postKey).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             print(snapshot.value)
           

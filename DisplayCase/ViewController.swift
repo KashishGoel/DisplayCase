@@ -11,11 +11,11 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import Firebase
 import FirebaseDatabase
-import PMAlertController
+//import PMAlertController
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var fbButton: MaterialButton!
     @IBOutlet var emailTextField: MaterialTextField!
     @IBOutlet var passTextField: MaterialTextField!
@@ -24,12 +24,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-//        if FIRAuth.auth()?.currentUser != nil {
-//        self.performSegueWithIdentifier("showLoggedIn", sender: self)
-//        }
+        if FIRAuth.auth()?.currentUser != nil {
+        self.performSegue(withIdentifier: "showLoggedIn", sender: self)
+        }
+        print("Email:")
+        print(FIRAuth.auth()?.currentUser?.email)
         
-        fbButton.setTitle("FB Login", forState: UIControlState.Normal)
-        fbButton.addTarget(self, action: #selector(ViewController.loginButtonClicked), forControlEvents: UIControlEvents.TouchUpInside)
+        fbButton.setTitle("FB Login", for: UIControlState())
+        fbButton.addTarget(self, action: #selector(ViewController.loginButtonClicked), for: UIControlEvents.touchUpInside)
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -37,27 +39,27 @@ class ViewController: UIViewController {
     func loginButtonClicked() {
         let login:FBSDKLoginManager = FBSDKLoginManager.init()
         
-        if (FBSDKAccessToken.currentAccessToken() != nil){
+        if (FBSDKAccessToken.current() != nil){
             
-            self.performSegueWithIdentifier("showLoggedIn", sender: self)
+            self.performSegue(withIdentifier: "showLoggedIn", sender: self)
             
         }
             
         else {
-            login.logInWithReadPermissions(["email"], fromViewController: self) { (FBSDKLoginManagerLoginResult, error) in
+            login.logIn(withReadPermissions: ["email"], from: self) { (FBSDKLoginManagerLoginResult, error) in
                 if (error != nil) {
                     
-                    print(error.localizedDescription)}
+                    print(error?.localizedDescription)}
                 else {
                     
-                    let credential = FIRFacebookAuthProvider.credentialWithAccessToken(FBSDKAccessToken.currentAccessToken().tokenString)
-                    FIRAuth.auth()?.signInWithCredential(credential, completion: { (user, error) in
-                        NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
-                        NSUserDefaults.standardUserDefaults().synchronize()
+                    let credential = FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+                    FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+                        UserDefaults.standard.setValue(user?.uid, forKey: uuidKey)
+                        UserDefaults.standard.synchronize()
                         let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
                         
                         changeRequest?.displayName = "UserThat"
-                        changeRequest?.commitChangesWithCompletion() { (error) in
+                        changeRequest?.commitChanges() { (error) in
                             
                             if let error = error {
                                 // self.showMessagePrompt(error.localizedDescription)
@@ -83,7 +85,7 @@ class ViewController: UIViewController {
                         }
                         
                         //print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
-                        self.performSegueWithIdentifier("showLoggedIn", sender: self)
+                        self.performSegue(withIdentifier: "showLoggedIn", sender: self)
                     })
                 }
             }
@@ -95,13 +97,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
          //   print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
             super.viewDidAppear(animated)
 
-            if NSUserDefaults.standardUserDefaults().valueForKey(uuidKey) != nil {
-                    self.performSegueWithIdentifier("showLoggedIn", sender: self)
+            if UserDefaults.standard.value(forKey: uuidKey) != nil {
+                    self.performSegue(withIdentifier: "showLoggedIn", sender: self)
             }
         ref = FIRDatabase.database().reference()
         
@@ -116,26 +118,26 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func emailButtonPressed(sender: AnyObject) {
+    @IBAction func emailButtonPressed(_ sender: AnyObject) {
         if emailTextField.text != "" && passTextField.text != "" {
-        FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passTextField.text!, completion: { (user, error) in
-            if error != nil {FIRAuth.auth()?.createUserWithEmail(self.emailTextField.text!, password: self.passTextField.text!, completion: { (user, error) in
-                NSUserDefaults.standardUserDefaults().setValue(user?.uid, forKey: uuidKey)
-//                self.ref.child("users").child(user!.uid).setValue(["username": "USER!"])
-                NSUserDefaults.standardUserDefaults().synchronize()
-                // print("uuid is: " +  NSUserDefaults.standardUserDefaults().stringForKey(uuidKey)!)
+        FIRAuth.auth()?.signIn(withEmail: emailTextField.text!, password: passTextField.text!, completion: { (user, error) in
+            if error != nil {FIRAuth.auth()?.createUser(withEmail: self.emailTextField.text!, password: self.passTextField.text!, completion: { (user, error) in
+                UserDefaults.standard.setValue(user?.uid, forKey: uuidKey)
+                self.ref.child("users").child(user!.uid).setValue(["username": "USER!"])
+                UserDefaults.standard.synchronize()
+//                 print("uuid is: " +  UserDefaults.standard.string(forKey: uuidKey)!)
                
                     let changeRequest = FIRAuth.auth()?.currentUser?.profileChangeRequest()
                     changeRequest?.displayName = "UserThat"
-                    changeRequest?.commitChangesWithCompletion() { (error) in
+                    changeRequest?.commitChanges() { (error) in
                       
                             if let error = error {
                                 print(error)
-                               // self.showMessagePrompt(error.localizedDescription)
+                                self.showError("damn", message: error.localizedDescription)
                                 return
                             }
                             // [START basic_write]
-                            self.ref.child("users").child(user!.uid).setValue(["username": "User2"])
+                            self.ref.child("users").child(user!.uid).setValue(["username": "User11"])
 
                        
                         self.ref.child("users").child(user!.uid).child("provider").setValue(user?.providerID)
@@ -146,12 +148,12 @@ class ViewController: UIViewController {
                     }
              
                 
-                    self.performSegueWithIdentifier("showLoggedIn", sender: self)
+                    self.performSegue(withIdentifier: "showLoggedIn", sender: self)
                
                 //
             })}
             else {
-                    self.performSegueWithIdentifier("showLoggedIn", sender: self)
+                    self.performSegue(withIdentifier: "showLoggedIn", sender: self)
             }
         })
         
@@ -163,18 +165,25 @@ class ViewController: UIViewController {
         
     }
     
-    func showError(title: String, message: String){
-    let alertVC = PMAlertController(title: title, description: message, image: UIImage(named: "flag.png"), style: PMAlertControllerStyle.Alert)
-        
-        alertVC.alertImage = UIImageView(image: UIImage(named: "alertBG"))
-        alertVC.addAction(PMAlertAction(title: "Cancel", style: .Cancel, action: { 
-            print("Cancel button tapped on AlertVc")
-        }))
-        
-        alertVC.addAction(PMAlertAction(title: "Ok", style: .Default, action: { 
-            print("Ok clicked on AlertVc")
-        }))
-        self.presentViewController(alertVC, animated: true, completion: nil)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    func showError(_ title: String, message: String){
+        let alertVC = UIAlertController(title: "Something went wrong", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Ok", style: .destructive, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+//    let alertVC = PMAlertController(title: title, description: message, image: UIImage(named: "flag.png"), style: PMAlertControllerStyle.Alert)
+//        
+//        alertVC.alertImage = UIImageView(image: UIImage(named: "alertBG"))
+//        alertVC.addAction(PMAlertAction(title: "Cancel", style: .Cancel, action: { 
+//            print("Cancel button tapped on AlertVc")
+//        }))
+//        
+//        alertVC.addAction(PMAlertAction(title: "Ok", style: .Default, action: { 
+//            print("Ok clicked on AlertVc")
+//        }))
+//        self.presentViewController(alertVC, animated: true, completion: nil)
     
     }
     
